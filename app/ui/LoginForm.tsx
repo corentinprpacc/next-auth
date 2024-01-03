@@ -2,9 +2,10 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import { lusitana } from "./fonts";
+import { authenticate } from "../lib/actions";
 
 export default function LoginForm() {
-    const [errorMessage, dispatch] = useFormState("authenticate", undefined);
+    const [errorMessage, dispatch] = useFormState(authenticate, undefined);
     return (
       <form className="flex flex-col w-full" action={dispatch}>
         <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
