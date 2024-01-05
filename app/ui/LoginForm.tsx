@@ -1,28 +1,27 @@
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
-import { lusitana } from "./fonts";
 import { authenticate } from "../lib/actions";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
     const [errorMessage, dispatch] = useFormState(authenticate, undefined);
     return (
-      <form className="flex flex-col w-full" action={dispatch}>
-        <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-          <h1 className={`mb-3 text-2xl`}>
-            Log In
-          </h1>
+      <form className="flex flex-col w-full items-center mt-2" action={dispatch}>
+        <div className="flex-1 flex flex-col w-1/3 items-center rounded-lg px-6">
           <div className="w-full">
             <div>
-              <label
-                className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              <Label
                 htmlFor="email"
+                className="text-white"
               >
                 Email
-              </label>
+              </Label>
               <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                <Input
+                  className="bg-gray-900 text-white"
                   id="email"
                   type="email"
                   name="email"
@@ -32,15 +31,15 @@ export default function LoginForm() {
               </div>
             </div>
             <div className="mt-4">
-              <label
-                className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              <Label
                 htmlFor="password"
+                className="text-white"
               >
                 Password
-              </label>
+              </Label>
               <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                <Input
+                  className="bg-gray-900 text-white"
                   id="password"
                   type="password"
                   name="password"
@@ -71,8 +70,8 @@ export default function LoginForm() {
   function LoginButton() {
     const { pending } = useFormStatus();
     return (
-      <button className="mt-4 w-full border rounded-md bg-sky-300 py-2" aria-disabled={pending}>
-        Log in
-      </button>
+      <Button variant="navbar" className="mt-6 w-full" aria-disabled={pending}>
+        Sign In
+      </Button>
     );
   }

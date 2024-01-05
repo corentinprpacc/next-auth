@@ -2,26 +2,27 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import { register } from "../lib/actions";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function RegisterForm() {
-    const [errorMessage, dispatch] = useFormState(register, undefined);
+    const initialState = { message: "", errors: {} };
+    const [state, dispatch] = useFormState(register, initialState);
     return (
-      <form className="flex flex-col w-full" action={dispatch}>
-        <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-          <h1 className={`mb-3 text-2xl`}>
-            Register
-          </h1>
+      <form className="flex flex-col items-center w-full" action={dispatch}>
+        <div className="flex-1 flex flex-col items-center w-1/3 rounded-lg px-6">
           <div className="w-full">
             <div>
-                <label
-                    className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                <Label
+                    className="text-white"
                     htmlFor="username"
                 >
                     Username
-                </label>
+                </Label>
                 <div className="relative">
-                    <input
-                    className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                  <Input
+                    className="peer bg-gray-900 text-white"
                     id="username"
                     type="username"
                     name="username"
@@ -29,17 +30,61 @@ export default function RegisterForm() {
                     required
                     />
                 </div>
+                <div id="username-error" aria-live="polite" aria-atomic="true">
+                {state && state.errors?.username &&
+                  state.errors.username.map((error: string) => (
+                    <p className="mt-2 text-sm text-red-500" key={error}>
+                      {error}
+                    </p>
+                  ))}
+              </div>
                 </div>
             <div className="mt-4">
-              <label
-                className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              <Label
+                className="text-white"
+                htmlFor="firstName"
+              >
+                First name
+              </Label>
+              <div className="relative">
+                <Input
+                  className="peer bg-gray-900 text-white"
+                  id="firstName"
+                  type="text"
+                  name="firstName"
+                  placeholder="Enter your firstname"
+                  required
+                />
+              </div>
+            </div>
+            <div className="mt-4">
+              <Label
+                className="text-white"
+                htmlFor="firstName"
+              >
+                Last name
+              </Label>
+              <div className="relative">
+                <Input
+                  className="peer bg-gray-900 text-white"
+                  id="lastName"
+                  type="text"
+                  name="lastName"
+                  placeholder="Enter your last name"
+                  required
+                />
+              </div>
+            </div>
+            <div className="mt-4">
+              <Label
+                className="text-white"
                 htmlFor="email"
               >
                 Email
-              </label>
+              </Label>
               <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                <Input
+                  className="peer bg-gray-900 text-white"
                   id="email"
                   type="email"
                   name="email"
@@ -49,15 +94,15 @@ export default function RegisterForm() {
               </div>
             </div>
             <div className="mt-4">
-              <label
-                className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              <Label
+                className="text-white"
                 htmlFor="password"
               >
                 Password
-              </label>
+              </Label>
               <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                <Input
+                  className="peer bg-gray-900 text-white"
                   id="password"
                   type="password"
                   name="password"
@@ -65,6 +110,41 @@ export default function RegisterForm() {
                   required
                   minLength={6}
                 />
+              </div>
+              <div id="password-error" aria-live="polite" aria-atomic="true">
+                {state.errors?.password &&
+                  state.errors.password.map((error: string) => (
+                    <p className="mt-2 text-sm text-red-500" key={error}>
+                      {error}
+                    </p>
+                  ))}
+              </div>
+            </div>
+            <div className="mt-4">
+              <Label
+                className="text-white"
+                htmlFor="confirmPassword"
+              >
+                Confirm Password
+              </Label>
+              <div className="relative">
+                <Input
+                  className="peer bg-gray-900 text-white"
+                  id="confirmPassword"
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Enter confirm password"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div id="confirmPassword-error" aria-live="polite" aria-atomic="true">
+                {state.errors?.confirmPassword &&
+                  state.errors.confirmPassword.map((error: string) => (
+                    <p className="mt-2 text-sm text-red-500" key={error}>
+                      {error}
+                    </p>
+                  ))}
               </div>
             </div>
           </div>
@@ -74,9 +154,9 @@ export default function RegisterForm() {
             aria-live="polite"
             aria-atomic="true"
           >
-            {errorMessage && (
+            {state.message && (
               <>
-                <p className="text-sm text-red-500">{errorMessage}</p>
+                <p className="text-sm text-red-500">{state.message}</p>
               </>
             )}
           </div>
@@ -88,8 +168,8 @@ export default function RegisterForm() {
   function LoginButton() {
     const { pending } = useFormStatus();
     return (
-      <button className="mt-4 w-full border rounded-md bg-sky-300 py-2" aria-disabled={pending}>
-        Register
-      </button>
+      <Button variant="navbar" className="mt-6 w-full" aria-disabled={pending}>
+        Sign Up
+      </Button>
     );
   }

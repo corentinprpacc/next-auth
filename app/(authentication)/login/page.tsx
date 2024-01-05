@@ -1,19 +1,25 @@
 import LoginForm from "@/app/ui/LoginForm";
+import { signIn } from "@/auth";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Login() {
     return (
-      <div className="h-screen flex flex-col justify-center items-center w-full">
-        <LoginForm />
-        <form action={async () => {
+      <div className="h-screen flex bg-gray-900 flex-col justify-center items-center w-full">
+        <h1 className={`text-center mb-3 text-4xl font-semibold text-white`}>
+          Sign In
+        </h1>
+        <form className="mt-2 flex flex-col items-center" action={async () => {
             'use server';
-            // await signIn("github", { callbackUrl: "/" });
+            await signIn("github", { callbackUrl: "/" });
           }}>
-          <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md bg-black text-white p-3 text-sm font-medium hover:bg-white hover:text-black md:flex-none md:justify-start md:p-2 md:px-3">
-            <div className="">
-              Sign In With GitHub
-            </div>
-          </button>
+          <Button variant="navbar">
+            Sign In with GitHub
+          </Button>
+          <span className="text-xl text-white font-semibold mt-2">OR</span>
         </form>
+        <LoginForm />
+        <Link href="/register" className="text-white underline mt-2">Not already have an account ? Register here</Link>
       </div>
     );
   }
